@@ -1,4 +1,4 @@
-package com.redhat.training;
+	package com.redhat.training;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -31,5 +31,19 @@ public class MultiplierResource implements MultiplierService {
     public Float multiply(@PathParam("lhs") String lhs, @PathParam("rhs") String rhs) {
         log.info("Multiplying {} to {}" ,lhs, rhs);
         return solverService.solve(lhs)*solverService.solve(rhs);
+    }
+   @Test 
+   public void simpleMultiplication() {
+
+      // Given
+      Mockito.when(solverService.solve("2")).thenReturn(Float.valueOf("2"));
+      Mockito.when(solverService.solve("3")).thenReturn(Float.valueOf("3"));
+
+      // When
+      Float result = multiplierResource.multiply("2", "3");
+
+      // Then
+      assertEquals( 6.0f, result );
+
     }
 }
